@@ -4,10 +4,21 @@ resource "azurerm_api_management_product" "freemium" {
   resource_group_name   = azurerm_resource_group.rg.name
   display_name          = "Freemium"
   subscription_required = true
-  subscriptions_limit = 1
+  subscriptions_limit   = 1
   approval_required     = false
   published             = true
-  
+
+}
+
+resource "azurerm_api_management_product" "basic" {
+  product_id            = "basic"
+  api_management_name   = azurerm_api_management.apim.name
+  resource_group_name   = azurerm_resource_group.rg.name
+  display_name          = "Basic"
+  subscription_required = true
+  approval_required     = true
+  published             = true
+
 }
 
 resource "azurerm_api_management_product" "standard" {
@@ -16,10 +27,9 @@ resource "azurerm_api_management_product" "standard" {
   resource_group_name   = azurerm_resource_group.rg.name
   display_name          = "Standard"
   subscription_required = true
-  subscriptions_limit = 1
   approval_required     = true
   published             = true
-  
+
 }
 
 resource "azurerm_api_management_product" "premium" {
@@ -28,8 +38,7 @@ resource "azurerm_api_management_product" "premium" {
   resource_group_name   = azurerm_resource_group.rg.name
   display_name          = "Premium"
   subscription_required = true
-  subscriptions_limit = 1
   approval_required     = true
   published             = true
-  
+
 }
