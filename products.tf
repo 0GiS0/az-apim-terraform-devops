@@ -35,6 +35,20 @@ XML
 
 }
 
+resource "azurerm_api_management_product_api" "conference_to_freemium" {
+  api_name            = azurerm_api_management_api.conference.name
+  product_id          = azurerm_api_management_product.freemium.product_id
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+}
+
+resource "azurerm_api_management_product_api" "swapi_to_freemium" {
+  api_name            = azurerm_api_management_api.swapi.name
+  product_id          = azurerm_api_management_product.freemium.product_id
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+}
+
 
 resource "azurerm_api_management_product" "basic" {
   product_id            = "basic"
@@ -74,6 +88,20 @@ XML
 
 }
 
+resource "azurerm_api_management_product_api" "conference_to_basic" {
+  api_name            = azurerm_api_management_api.conference.name
+  product_id          = azurerm_api_management_product.basic.product_id
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+}
+
+resource "azurerm_api_management_product_api" "swapi_to_basic" {
+  api_name            = azurerm_api_management_api.swapi.name
+  product_id          = azurerm_api_management_product.basic.product_id
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+}
+
 resource "azurerm_api_management_product" "standard" {
   product_id            = "standard"
   api_management_name   = azurerm_api_management.apim.name
@@ -111,6 +139,20 @@ XML
 
 }
 
+resource "azurerm_api_management_product_api" "conference_to_standard" {
+  api_name            = azurerm_api_management_api.conference.name
+  product_id          = azurerm_api_management_product.standard.product_id
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+}
+
+resource "azurerm_api_management_product_api" "swapi_to_standard" {
+  api_name            = azurerm_api_management_api.swapi.name
+  product_id          = azurerm_api_management_product.standard.product_id
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+}
+
 resource "azurerm_api_management_product" "premium" {
   product_id            = "premium"
   api_management_name   = azurerm_api_management.apim.name
@@ -146,4 +188,18 @@ resource "azurerm_api_management_product_policy" "premium_policy" {
 </policies>
 XML
 
+}
+
+resource "azurerm_api_management_product_api" "conference_to_premium" {
+  api_name            = azurerm_api_management_api.conference.name
+  product_id          = azurerm_api_management_product.premium.product_id
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+}
+
+resource "azurerm_api_management_product_api" "swapi_to_premium" {
+  api_name            = azurerm_api_management_api.swapi.name
+  product_id          = azurerm_api_management_product.premium.product_id
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
 }
