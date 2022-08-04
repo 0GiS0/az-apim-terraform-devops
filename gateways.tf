@@ -10,3 +10,4 @@ resource "azurerm_api_management_gateway" "example" {
     region   = "Spain"
   }
 }
+
