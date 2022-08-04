@@ -70,6 +70,26 @@ resource "azurerm_api_management_api_operation" "starwars_people" {
   }
 }
 
+resource "azurerm_api_management_api_operation" "starwars_starships" {
+  operation_id        = "starships-get"
+  api_name            = azurerm_api_management_api.swapi.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+  display_name        = "Get Starship"
+  method              = "GET"
+  url_template        = "/starships/{id}"
+  description         = "A Starship resource is a single transport craft that has hyperdrive capability."
+
+  template_parameter {
+    name          = "id"
+    required      = true
+    type          = "integer"
+    description   = "The starship id"
+    default_value = 12
+  }
+}
+
+
 # Add Star Wars API to Freemium product
 resource "azurerm_api_management_product_api" "starter_swapi" {
   api_name            = azurerm_api_management_api.swapi.name
