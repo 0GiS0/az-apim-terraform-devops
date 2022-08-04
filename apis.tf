@@ -89,6 +89,21 @@ resource "azurerm_api_management_api_operation" "starwars_starships" {
   }
 }
 
+resource "azurerm_api_management_api_operation_policy" "starwars_starships_policy" {
+  api_name            = azurerm_api_management_api.swapi.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+  operation_id        = azurerm_api_management_api_operation.starwars_starships.operation_id
+
+  xml_content = <<XML
+<policies>
+  <inbound>
+    <find-and-replace from="xyz" to="abc" />
+  </inbound>
+</policies>
+XML
+
+}
 
 # Add Star Wars API to Freemium product
 resource "azurerm_api_management_product_api" "starter_swapi" {
