@@ -21,7 +21,7 @@ resource "azurerm_api_management_api_diagnostic" "swapi_diag" {
   resource_group_name      = azurerm_resource_group.rg.name
   api_management_name      = azurerm_api_management.apim.name
   api_name                 = azurerm_api_management_api.swapi.name
-  api_management_logger_id = azurerm_api_management_logger.example.id
+  api_management_logger_id = azurerm_api_management_logger.apimlogger.id
 
   sampling_percentage       = 5.0
   always_log_errors         = true
