@@ -142,9 +142,19 @@ resource "azurerm_api_management_api_operation" "people_in_space_get" {
   display_name        = "Get People in space"
   method              = "GET"
   url_template        = "/astros.json"
-  description         = "People in space"
+  description         = "The number of people in space at this moment. List of names when known."
 }
 
+resource "azurerm_api_management_api_operation" "people_in_space_get" {
+  operation_id        = "iss_location_get"
+  api_name            = azurerm_api_management_api.people_in_space.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+  display_name        = "ISS Location Now"
+  method              = "GET"
+  url_template        = "/iss-now.json"
+  description         = "Current ISS location over Earth (latitude/longitude)"
+}
 
 
 # Mock API
