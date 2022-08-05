@@ -305,6 +305,6 @@ resource "azurerm_api_management_api_tag" "local_weather_onprem" {
 
 # Add this API to a gateway
 resource "azurerm_api_management_gateway_api" "imac_local_weather" {
-  gateway_id = data.azurerm_api_management_gateway.imac.id
-  api_id     = data.azurerm_api_management_api.local_weather.id
+  gateway_id = azurerm_api_management_gateway.imac.id
+  api_id     = azurerm_api_management_api.local_weather.id
 }
