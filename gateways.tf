@@ -1,4 +1,4 @@
-resource "azurerm_api_management_gateway" "example" {
+resource "azurerm_api_management_gateway" "imac" {
   name              = "imac-gateway"
   api_management_id = azurerm_api_management.apim.id
   description       = "iMac Gateway"

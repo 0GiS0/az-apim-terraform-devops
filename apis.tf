@@ -286,3 +286,25 @@ resource "azurerm_api_management_api_operation_policy" "return_response_mock" {
 XML
 }
 
+# Local API using gateway
+resource "azurerm_api_management_api" "local_weather" {
+  name                = "local_weather"
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+  revision            = "1"
+  display_name        = "Local Weather API"
+  path                = "local"
+  protocols           = ["https"]
+  service_url         = "http://172.17.0.3/weatherforecast" # IP address inside Docker network
+}
+
+resource "azurerm_api_management_api_tag" "local_weather_onprem" {
+  api_id = azurerm_api_management_api.local_weather.id
+  name   = azurerm_api_management_tag.on_prem.name
+}
+
+# Add this API to a gateway
+resource "azurerm_api_management_gateway_api" "imac_local_weather" {
+  gateway_id = data.azurerm_api_management_gateway.imac.id
+  api_id     = data.azurerm_api_management_api.local_weather.id
+}
