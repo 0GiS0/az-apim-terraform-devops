@@ -145,7 +145,7 @@ resource "azurerm_api_management_api_operation" "people_in_space_get" {
   description         = "The number of people in space at this moment. List of names when known."
 }
 
-resource "azurerm_api_management_api_operation" "people_in_space_get" {
+resource "azurerm_api_management_api_operation" "iss_location_get" {
   operation_id        = "iss_location_get"
   api_name            = azurerm_api_management_api.people_in_space.name
   api_management_name = azurerm_api_management.apim.name
