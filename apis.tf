@@ -122,6 +122,31 @@ resource "azurerm_api_management_api_tag" "indevelopment" {
   name   = azurerm_api_management_tag.indevelopment.name
 }
 
+# People in space
+resource "azurerm_api_management_api" "people_in_space" {
+  name                = "people_in_space"
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+  revision            = "1"
+  display_name        = "People in space"
+  path                = "people-in-space"
+  protocols           = ["https"]
+  service_url         = "http://api.open-notify.org"
+}
+
+resource "azurerm_api_management_api_operation" "people_in_space_get" {
+  operation_id        = "people_in_space_get"
+  api_name            = azurerm_api_management_api.people_in_space.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+  display_name        = "Get People in space"
+  method              = "GET"
+  url_template        = "/astros.json"
+  description         = "People in space"
+}
+
+
+
 # Mock API
 resource "azurerm_api_management_api" "mock" {
   name                = "mock"
