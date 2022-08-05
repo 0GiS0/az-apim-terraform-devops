@@ -97,9 +97,12 @@ resource "azurerm_api_management_api_operation_policy" "starwars_starships_polic
 
   xml_content = <<XML
 <policies>
-  <inbound>
-    <find-and-replace from="xyz" to="abc" />
-  </inbound>
+  <outbound>
+    <base />
+    <set-header name="demo" exists-action="override">
+        <value>Starship operation policy</value>
+    </set-header>
+  </outbound>
 </policies>
 XML
 
