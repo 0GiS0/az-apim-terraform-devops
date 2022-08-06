@@ -13,7 +13,7 @@ resource "azurerm_redis_cache" "cache" {
 }
 
 resource "azurerm_api_management_redis_cache" "apim_cache" {
-  name              = "apim-cache"
+  name              = random_pet.service.id
   api_management_id = azurerm_api_management.apim.id
   connection_string = azurerm_redis_cache.cache.primary_connection_string
   description       = "Redis cache instances"
