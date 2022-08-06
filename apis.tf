@@ -308,3 +308,30 @@ resource "azurerm_api_management_gateway_api" "imac_local_weather" {
   gateway_id = azurerm_api_management_gateway.imac.id
   api_id     = azurerm_api_management_api.local_weather.id
 }
+
+resource "azurerm_api_management_api_policy" "local_weather_policy" {
+  api_name            = azurerm_api_management_api.local_weather.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+
+  xml_content = <<XML
+<policies>
+    <inbound>
+        <base />
+        <rate-limit-by-key calls="5" renewal-period="5" counter-key="@(context.Subscription?.Key ?? "anonymous")" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+        <set-header name="local_api_demo" exists-action="override">
+            <value>You can use policies with local APIs</value>
+        </set-header>
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
+XML
+}
