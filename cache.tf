@@ -1,5 +1,5 @@
 resource "azurerm_redis_cache" "cache" {
-  name                = "apim-cache"
+  name                = random_pet.service.id
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   capacity            = 1
