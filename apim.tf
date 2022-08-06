@@ -2,11 +2,16 @@ provider "azurerm" {
   features {}
 }
 
-resource "random_pet" "service" { }
+resource "random_pet" "service" {}
+
+variable "location" {
+  default = "westeurope"
+
+}
 
 resource "azurerm_resource_group" "rg" {
   name     = "api-management-demo"
-  location = "West Europe"
+  location = var.location
 }
 
 #API Management
