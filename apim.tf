@@ -28,14 +28,19 @@ resource "azurerm_api_management" "apim" {
     xml_content = <<XML
 <policies>
     <inbound>
-        <cors>
-            <allowed-origins>
-                <origin>*</origin>
-            </allowed-origins>
-            <allowed-methods>
-                <method>GET</method>
-                <method>POST</method>
-            </allowed-methods>
+       <cors allow-credentials="true">
+          <allowed-origins>
+              <origin>https://${random_pet.service.id}.developer.azure-api.net</origin>
+          </allowed-origins>
+          <allowed-methods preflight-result-max-age="300">
+            <method>*</method>
+          </allowed-methods>
+          <allowed-headers>
+              <header>*</header>
+          </allowed-headers>
+          <expose-headers>
+              <header>*</header>
+          </expose-headers>
         </cors>
     </inbound>
     <backend>
@@ -43,7 +48,7 @@ resource "azurerm_api_management" "apim" {
     </backend>
     <outbound />
     <on-error />
-</policies>
+</policies> 
 XML
 
   }
