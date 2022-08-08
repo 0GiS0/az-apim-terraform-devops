@@ -3,6 +3,7 @@ resource "azurerm_api_management_product" "freemium" {
   api_management_name   = azurerm_api_management.apim.name
   resource_group_name   = azurerm_resource_group.rg.name
   display_name          = "Freemium"
+  description           = "You can use this product for free, but only 5 calls per hour."
   subscription_required = true
   subscriptions_limit   = 1
   approval_required     = false
@@ -18,7 +19,7 @@ resource "azurerm_api_management_product_policy" "freemium_policy" {
   xml_content = <<XML
 <policies>
     <inbound>
-        <quota-by-key calls="5" renewal-period="300" counter-key="@(context.Request.IpAddress)" />
+        <quota-by-key calls="5" renewal-period="3600" counter-key="@(context.Request.IpAddress)" />
         <base />
     </inbound>
     <backend>
@@ -55,6 +56,7 @@ resource "azurerm_api_management_product" "basic" {
   api_management_name   = azurerm_api_management.apim.name
   resource_group_name   = azurerm_resource_group.rg.name
   display_name          = "Basic"
+  description           = "Get 100 calls per hour but only 5 calls per minute."
   subscription_required = true
   subscriptions_limit   = 1
   approval_required     = true
@@ -71,7 +73,7 @@ resource "azurerm_api_management_product_policy" "basic_policy" {
 <policies>
     <inbound>
         <rate-limit calls="5" renewal-period="60" />
-        <quota calls="100" renewal-period="604800" />
+        <quota calls="100" renewal-period="3600" />
         <base />
     </inbound>
     <backend>
@@ -107,6 +109,7 @@ resource "azurerm_api_management_product" "standard" {
   api_management_name   = azurerm_api_management.apim.name
   resource_group_name   = azurerm_resource_group.rg.name
   display_name          = "Standard"
+  description           = "Get 200 calls per hour"
   subscription_required = true
   subscriptions_limit   = 1
   approval_required     = true
@@ -122,7 +125,7 @@ resource "azurerm_api_management_product_policy" "standard_policy" {
   xml_content = <<XML
 <policies>
     <inbound>        
-        <quota calls="200" renewal-period="604800" />
+        <quota calls="200" renewal-period="3600" />
         <base />
     </inbound>
     <backend>
@@ -158,6 +161,7 @@ resource "azurerm_api_management_product" "premium" {
   api_management_name   = azurerm_api_management.apim.name
   resource_group_name   = azurerm_resource_group.rg.name
   display_name          = "Premium"
+  description           = "Enjoy all the features of our APIs without limits per hour."
   subscription_required = true
   subscriptions_limit   = 1
   approval_required     = true
@@ -173,7 +177,7 @@ resource "azurerm_api_management_product_policy" "premium_policy" {
   xml_content = <<XML
 <policies>
     <inbound>        
-        <quota calls="500" renewal-period="604800" />
+        <quota calls="500" renewal-period="3600" />
         <base />
     </inbound>
     <backend>
