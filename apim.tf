@@ -24,6 +24,12 @@ resource "azurerm_api_management" "apim" {
 
   sku_name = "Developer_1"
 
+  timeouts {
+    create = "60m"
+    delete = "60"    
+
+  }
+
   policy {
     xml_content = <<XML
 <policies>
