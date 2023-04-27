@@ -26,7 +26,7 @@ resource "azurerm_api_management" "apim" {
 
   timeouts {
     create = "60m"
-    delete = "60"    
+    delete = "60m"    
 
   }
 

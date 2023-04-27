@@ -19,4 +19,12 @@ resource "azurerm_api_management_redis_cache" "apim_cache" {
   description       = "Redis cache instances"
   redis_cache_id    = azurerm_redis_cache.cache.id
   cache_location    = var.location
+
+
+  timeouts {
+    create = "60m"
+    delete = "60m"    
+
+  }
+
 }

@@ -1,4 +1,7 @@
-terraform init
+terraform init \
+-backend-config="storage_account_name=${STORAGE_ACCOUNT_NAME}" \
+-backend-config="container_name=${STORAGE_ACCOUNT_CONTAINER}" \
+-backend-config="access_key=${STORAGE_ACCOUNT_KEY}"
 
 terraform plan \
 -backend-config="storage_account_name=${STORAGE_ACCOUNT_NAME}" \
