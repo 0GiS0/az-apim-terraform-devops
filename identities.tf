@@ -20,4 +20,5 @@ resource "azurerm_api_management_identity_provider_aad" "aad" {
   client_secret       = var.aad_client_secret
   allowed_tenants     = [var.aad_tenant_id]
   signin_tenant       = var.aad_tenant_id
+
 }

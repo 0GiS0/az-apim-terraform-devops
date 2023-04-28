@@ -23,7 +23,7 @@ resource "azurerm_api_management_redis_cache" "apim_cache" {
 
   timeouts {
     create = "60m"
-    delete = "60m"    
+    delete = "60m"
 
   }
 

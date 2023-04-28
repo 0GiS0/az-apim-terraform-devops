@@ -1,16 +1,29 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.54.0"
+    }
+  }
+}
+
 provider "azurerm" {
-  features {}
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }
 }
 
 resource "random_pet" "service" {}
 
 variable "location" {
-  default = "westeurope"
+  default = "northeurope"
 
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "api-management-demo"
+  name     = "apim-defender-demo"
   location = var.location
 }
 
@@ -25,9 +38,7 @@ resource "azurerm_api_management" "apim" {
   sku_name = "Developer_1"
 
   timeouts {
-    create = "60m"
-    delete = "60m"    
-
+    create = "120m"
   }
 
   policy {
