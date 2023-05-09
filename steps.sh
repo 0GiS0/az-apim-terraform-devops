@@ -72,6 +72,16 @@ terraform init \
 -backend-config="container_name=${CONTAINER_NAME}" \
 -backend-config="access_key=${STORAGE_ACCOUNT_KEY}"
 
+# Put this variables in .devcontainer/devcontainer.env
+cat <<EOF > .devcontainer/devcontainer.env
+STORAGE_ACCOUNT_NAME=$STORAGE_ACCOUNT_NAME
+CONTAINER_NAME=$CONTAINER_NAME
+STORAGE_ACCOUNT_KEY=$STORAGE_ACCOUNT_KEY
+EOF
+
+# If you can use Dev Container export the variables to the terminal
+eval $(cat .devcontainer/devcontainer.env)
+
 # Check the state
 terraform state list
 
@@ -86,4 +96,4 @@ EOF
 terraform plan -out=tfplan
 
 # Apply the plan
-terraform apply tfplan -auto-approve
+terraform apply -auto-approve
