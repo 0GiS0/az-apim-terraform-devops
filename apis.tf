@@ -335,3 +335,141 @@ resource "azurerm_api_management_api_policy" "local_weather_policy" {
 </policies>
 XML
 }
+
+# Goat API
+resource "azurerm_api_management_api" "goat" {
+  name                = "goat"
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+  revision            = "1"
+  display_name        = "Goat API"
+  path                = "goat"
+  # protocols           = ["http"]
+  protocols   = ["http", "https"]
+  service_url = "http://goat-dotnet-api.azurewebsites.net"
+
+  description = "API with some vulnerabilities"
+
+}
+
+# Goat Operations
+resource "azurerm_api_management_api_operation" "broken_access_control" {
+
+  operation_id        = "broken-access-control"
+  api_name            = azurerm_api_management_api.goat.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+  display_name        = "A01:2021-Broken Access Control"
+  description         = "Broken Access Control demo"
+  method              = "GET"
+  url_template        = "/profile"
+
+  # request {
+  #   query_parameter {
+  #     name          = "profileId"
+  #     type          = "int"
+  #     required      = true
+  #     default_value = "1"
+  #   }
+  # }
+}
+
+resource "azurerm_api_management_api_operation" "cryptographic_failures" {
+
+  operation_id        = "cryptographic-failures"
+  api_name            = azurerm_api_management_api.goat.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+  display_name        = "A02:2021-Cryptographic Failures"
+  description         = "Cryptographic Failures demo"
+  method              = "POST"
+  url_template        = "/newuser"
+
+  # request {
+  #   query_parameter {
+  #     name          = "User"
+  #     required      = true
+  #     type          = "string"
+  #     default_value = "{'id':0,'userName':'string','password':'string','email':'string','isAdmin':true,'isLocked':true,'lastLogin':'string'}"
+  #   }
+  # }
+}
+
+resource "azurerm_api_management_api_operation" "sql_injection" {
+
+  operation_id        = "sql-injection"
+  api_name            = azurerm_api_management_api.goat.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+  display_name        = "A03:2021-Injection"
+  description         = "SQL Injection demo"
+  method              = "GET"
+  url_template        = "/customer"
+
+  # request {
+  #   query_parameter {
+  #     name          = "id"
+  #     required      = true
+  #     type          = "string"
+  #     default_value = "1 or 1=1"
+  #   }
+  # }
+}
+
+resource "azurerm_api_management_api_operation" "software_and_data_integrity_failures" {
+
+  operation_id        = "software-and-data-integrity-failures"
+  api_name            = azurerm_api_management_api.goat.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+  display_name        = "A08:2021-Software and Data Integrity Failures"
+  description         = "Software and Data Integrity Failures"
+  method              = "POST"
+  url_template        = "/addcreditcard"
+
+  # request {
+  #   query_parameter {
+  #     name          = "CreditCard"
+  #     required      = true
+  #     type          = "string"
+  #     default_value = "{'id': 0,'cardNumber': 'string','expirationDate': 'string','cvv': 'string','userId': 0}"
+  #   }
+  # }
+}
+
+
+# Add Goat API to freemium product
+resource "azurerm_api_management_product_api" "goat_freemium" {
+  product_id          = azurerm_api_management_product.freemium.product_id
+  api_name            = azurerm_api_management_api.goat.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+
+}
+
+resource "azurerm_api_management_api_policy" "goat_policy" {
+  api_name            = azurerm_api_management_api.goat.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+
+  xml_content = <<XML
+  <policies>
+    <inbound>
+        <include-fragment fragment-id="forward-context" />
+        <base />        
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+        <set-header name="local_api_demo" exists-action="override">
+            <value>You can use policies with local APIs</value>
+        </set-header>
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
+XML
+}
