@@ -1,3 +1,36 @@
+# Azure Open API import from JSON file
+resource "azurerm_api_management_api" "azopenai" {
+  name                = "azure-open-ai"
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+  revision            = "1"
+  display_name        = "Azure Open AI"
+  path                = "azure-open-ai"
+  protocols           = ["https"]
+
+  import {
+    content_format = "openapi+json"
+    content_value  = file("open-ai-definition.json")
+  }
+}
+
+#Policy to add Azure Open AI Key
+resource "azurerm_api_management_api_policy" "azopenai_policy" {
+  api_name            = azurerm_api_management_api.azopenai.name
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = azurerm_resource_group.rg.name
+
+  xml_content = <<XML
+<policies>
+  <inbound>
+    <set-header name="api-key" exists-action="append">
+        <value>{{azure-openai-key}}</value>
+    </set-header>
+  </inbound>
+</policies>
+XML
+}
+
 # Conference Demo API
 resource "azurerm_api_management_api" "conference" {
   name                = "demo-conference-api"

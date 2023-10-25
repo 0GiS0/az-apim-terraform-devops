@@ -13,9 +13,9 @@ terraform {
 
 provider "azurerm" {
   features {
-    # resource_group {
-    #   prevent_deletion_if_contains_resources = false
-    # }
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
   }
 }
 
@@ -26,8 +26,12 @@ variable "location" {
 
 }
 
+variable "azure_openai_key" {
+
+}
+
 resource "azurerm_resource_group" "rg" {
-  name     = "apim-defender-demo"
+  name     = "apim-${random_pet.service.id}"
   location = var.location
 }
 

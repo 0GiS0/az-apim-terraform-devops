@@ -97,3 +97,6 @@ terraform plan -out=tfplan
 
 # Apply the plan
 terraform apply -auto-approve
+
+set -o allexport; source .env; set +o allexport
+terraform init

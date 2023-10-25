@@ -12,5 +12,14 @@ resource "azurerm_api_management_named_value" "demo_secret" {
   api_management_name = azurerm_api_management.apim.name
   display_name        = "demo-secret"
   value               = "Hello, World! I'm a secret named value"
-  secret = true
+  secret              = true
 }
+
+resource "azurerm_api_management_named_value" "azopenai_key" {
+  name                = "azure-openai-key"
+  resource_group_name = azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.apim.name
+  display_name        = "azure-openai-key"
+  value               = var.azure_openai_key
+  secret              = true
+} 
