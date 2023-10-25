@@ -8,6 +8,9 @@ resource "azurerm_api_management_api" "azopenai" {
   path                = "azure-open-ai"
   protocols           = ["https"]
 
+  service_url = "https://azopenaiforapim.openai.azure.com/openai"
+
+
   import {
     content_format = "openapi+json"
     content_value  = file("open-ai-definition.json")
